@@ -104,6 +104,10 @@ defmodule TwitterLiveview.Timeline do
     Post.changeset(post, attrs)
   end
 
+  def subscribe do
+    Phoenix.PubSub.subscribe(TwitterLiveview.PubSub, "posts")
+  end
+
   def broadcast({:error, _reason} = error, _event), do: error
 
   def broadcast({:ok, post}, event) do
