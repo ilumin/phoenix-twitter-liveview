@@ -15,12 +15,16 @@ defmodule TwitterLiveviewWeb.PostLive.PostComponent do
       </div>
       <div class="row">
         <div class="column">
-          <i class="far fa-heart">likes</i>
-          <%= @post.likes_count %>
+          <a href="#" phx-click="like" phx-target="<%= @myself %>">
+            <i class="far fa-heart">likes</i>
+            <%= @post.likes_count %>
+          </a>
         </div>
         <div class="column">
-          <i class="far fa-retweet">retweet</i>
-          <%= @post.reposts_count %>
+          <a href="#" phx-click="repost" phx-target="<%= @myself %>">
+            <i class="far fa-retweet">retweet</i>
+            <%= @post.reposts_count %>
+          </a>
         </div>
         <div class="column">
           <%= live_patch to: Routes.post_index_path(@socket, :edit, @post) do %>
@@ -33,5 +37,15 @@ defmodule TwitterLiveviewWeb.PostLive.PostComponent do
       </div>
     </div>
     """
+  end
+
+  def handle_event("like", _, socket) do
+    TwitterLiveview.Timeline.inc_likes(socket.assigns.post)
+    {:noreply, socket}
+  end
+
+  def handle_event("repost", _, socket) do
+    TwitterLiveview.Timeline.inc_reposts(socket.assigns.post)
+    {:noreply, socket}
   end
 end
