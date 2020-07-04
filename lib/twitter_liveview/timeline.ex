@@ -53,6 +53,7 @@ defmodule TwitterLiveview.Timeline do
     %Post{}
     |> Post.changeset(attrs)
     |> Repo.insert()
+    |> broadcast(:post_created)
   end
 
   @doc """
@@ -71,6 +72,7 @@ defmodule TwitterLiveview.Timeline do
     post
     |> Post.changeset(attrs)
     |> Repo.update()
+    |> broadcast(:post_updated)
   end
 
   @doc """
@@ -100,5 +102,12 @@ defmodule TwitterLiveview.Timeline do
   """
   def change_post(%Post{} = post, attrs \\ %{}) do
     Post.changeset(post, attrs)
+  end
+
+  def broadcast({:error, _reason} = error, _event), do: error
+
+  def broadcast({:ok, post}, event) do
+    Phoenix.PubSub.broadcast(TwitterLiveview.PubSub, "posts", {event, post})
+    {:ok, post}
   end
 end
