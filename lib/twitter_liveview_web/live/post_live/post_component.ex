@@ -15,19 +15,19 @@ defmodule TwitterLiveviewWeb.PostLive.PostComponent do
       </div>
       <div class="row">
         <div class="column">
-          <i class="far fa-heart"></i>
+          <i class="far fa-heart">likes</i>
           <%= @post.likes_count %>
         </div>
         <div class="column">
-          <i class="far fa-retweet"></i>
+          <i class="far fa-retweet">retweet</i>
           <%= @post.reposts_count %>
         </div>
         <div class="column">
           <%= live_patch to: Routes.post_index_path(@socket, :edit, @post) do %>
-            <i class="far fa-edit"></i>
+            <i class="far fa-edit">edit</i>
           <% end %>
           <%= link to: "#", phx_click: "delete", phx_value_id: @post.id, data: [confirm: "Are you sure?"] do %>
-            <i class="far fa-trash-alt"></i>
+            <i class="far fa-trash-alt">delete</i>
           <% end %>
         </div>
       </div>
