@@ -2,8 +2,8 @@ use Mix.Config
 
 # Configure your database
 config :twitter_liveview, TwitterLiveview.Repo,
-  username: "postgres",
-  password: "postgres",
+  username: "ilumin",
+  password: "",
   database: "twitter_liveview_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
